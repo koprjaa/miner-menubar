@@ -1,7 +1,7 @@
 [project]
 name = "miner-widget-stats"
 version = "1.0.0"
-description = "macOS menu bar widget showing mining pool hashrate and a Tuya sensor temperature."
+description = "Shows mining hashrate and room temperature in the macOS menu bar."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
