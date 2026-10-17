@@ -47,9 +47,7 @@ def test_the_signature_matches_the_documented_string_to_sign():
     ts, nonce = "1700000000000", "abc123"
     empty_body = hashlib.sha256(b"").hexdigest()
     expected_base = ACCESS_ID + ts + nonce + f"GET\n{empty_body}\n\n{PATH}"
-    expected = hmac.new(
-        SECRET.encode(), expected_base.encode(), hashlib.sha256
-    ).hexdigest().upper()
+    expected = hmac.new(SECRET.encode(), expected_base.encode(), hashlib.sha256).hexdigest().upper()
     assert signature(ACCESS_ID, SECRET, PATH, ts, nonce) == expected
 
 
@@ -83,9 +81,7 @@ def test_every_signed_part_changes_the_signature(changed):
 
 def test_a_different_secret_gives_a_different_signature():
     ts, nonce = "1", "n"
-    assert signature(ACCESS_ID, SECRET, PATH, ts, nonce) != signature(
-        ACCESS_ID, "other", PATH, ts, nonce
-    )
+    assert signature(ACCESS_ID, SECRET, PATH, ts, nonce) != signature(ACCESS_ID, "other", PATH, ts, nonce)
 
 
 # --- make_headers -----------------------------------------------------------
@@ -114,9 +110,7 @@ def test_two_requests_get_different_nonces():
 
 def test_the_headers_are_signed_with_their_own_timestamp_and_nonce():
     headers = make_headers(ACCESS_ID, SECRET, PATH, "tok")
-    assert headers["sign"] == signature(
-        ACCESS_ID, SECRET, PATH, headers["t"], headers["nonce"], "tok"
-    )
+    assert headers["sign"] == signature(ACCESS_ID, SECRET, PATH, headers["t"], headers["nonce"], "tok")
 
 
 # --- base_url ---------------------------------------------------------------
@@ -201,9 +195,9 @@ def test_a_response_without_a_success_field_is_treated_as_refused():
 @pytest.mark.parametrize(
     ("value", "unit", "expected"),
     [
-        (12500, "Gh/s", "12.5TH/s"),   # converted once it reaches a terahash
-        (1000, "Gh/s", "1.0TH/s"),     # exactly at the boundary
-        (999, "Gh/s", "999.0Gh/s"),    # just below, keeps its own unit
+        (12500, "Gh/s", "12.5TH/s"),  # converted once it reaches a terahash
+        (1000, "Gh/s", "1.0TH/s"),  # exactly at the boundary
+        (999, "Gh/s", "999.0Gh/s"),  # just below, keeps its own unit
         (500, "Gh/s", "500.0Gh/s"),
         (12.5, "TH/s", "12.5TH/s"),
         (1.5, "Ph/s", "1500.0TH/s"),

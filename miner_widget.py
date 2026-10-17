@@ -50,7 +50,8 @@ HEADERS = {"Pool-Auth-Token": TOKEN} if TOKEN else {}
 
 # LSUIElement hides the dock icon. Apple defines the spelling, so it
 # cannot be capitalized.
-os.environ['LSUIElement'] = '1'  # noqa: SIM112
+os.environ["LSUIElement"] = "1"  # noqa: SIM112
+
 
 class Logger:
     """One logger for the whole application: a rotating file plus the console."""
@@ -74,19 +75,19 @@ class Logger:
         logs_dir.mkdir(parents=True, exist_ok=True)
 
         log_path = logs_dir / "miner.log"
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
         file_handler = RotatingFileHandler(
             log_path,
-            maxBytes=1024*1024,  # 1MB
-            backupCount=5
+            maxBytes=1024 * 1024,  # 1MB
+            backupCount=5,
         )
         file_handler.setFormatter(formatter)
 
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
 
-        self.logger = logging.getLogger('miner')
+        self.logger = logging.getLogger("miner")
         self.logger.setLevel(logging.INFO)
         self.logger.propagate = False
         self.logger.handlers = []
@@ -96,7 +97,9 @@ class Logger:
     def get_logger(self):
         return self.logger
 
+
 logger = Logger().get_logger()
+
 
 def check_internet():
     """True when 8.8.8.8 answers on the DNS port.
@@ -123,6 +126,7 @@ def open_log():
     else:
         logger.error(f"Log file does not exist: {log_path}")
 
+
 class MinerWidget(rumps.App):
     """Menu bar widget showing the pool hash rate and the room temperature."""
 
@@ -136,7 +140,7 @@ class MinerWidget(rumps.App):
             rumps.MenuItem("Aktualizovat", callback=self.force_update),
             rumps.MenuItem("Otevřít log", callback=lambda _: open_log()),
             rumps.MenuItem("Ukončit", callback=self.quit),
-            None  # separator
+            None,  # separator
         ]
 
         logger.info("Widget initialized")
@@ -176,8 +180,8 @@ class MinerWidget(rumps.App):
         if profile and workers:
             try:
                 data = profile[COIN]
-                hr5 = data['hash_rate_5m']
-                unit = data['hash_rate_unit']
+                hr5 = data["hash_rate_5m"]
+                unit = data["hash_rate_unit"]
                 logger.info(f"Hash rate: {hr5} {unit}")
 
                 display_rate = format_hashrate(hr5, unit)
@@ -259,12 +263,14 @@ class MinerWidget(rumps.App):
 
         super().quit()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # Hide the Dock icon. Pairs with the LSUIElement environment variable set at import.
     try:
         import AppKit
+
         info = AppKit.NSBundle.mainBundle().infoDictionary()
-        info['LSUIElement'] = True
+        info["LSUIElement"] = True
     except ImportError:
         pass
 
