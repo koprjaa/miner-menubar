@@ -5,12 +5,12 @@
 // License: MIT
 
 use std::panic::{catch_unwind, AssertUnwindSafe};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 use std::thread;
 
 use miner_widget_stats::config::{self, Config};
 use miner_widget_stats::logger;
-use miner_widget_stats::widget::{open_log, update_once, INITIAL_TITLE};
+use miner_widget_stats::widget::{open_log, run_exclusive, update_once, INITIAL_TITLE};
 use reqwest::blocking::Client;
 use tao::event::{Event, StartCause};
 use tao::event_loop::{ControlFlow, EventLoopBuilder, EventLoopProxy};
@@ -24,18 +24,36 @@ enum UserEvent {
 }
 
 /// Refresh once and hand the title to the event loop, which owns the menu bar.
-fn refresh(client: &Client, config: &Config, proxy: &EventLoopProxy<UserEvent>) {
-    let title = update_once(client, config);
-    let _ = proxy.send_event(UserEvent::Title(title));
+/// `wait` false skips the refresh when another one is running.
+fn refresh(
+    client: &Client,
+    config: &Config,
+    proxy: &EventLoopProxy<UserEvent>,
+    gate: &Mutex<()>,
+    wait: bool,
+) -> bool {
+    let title = run_exclusive(gate, wait, || update_once(client, config));
+    let ran = title.is_some();
+    if let Some(title) = title {
+        let _ = proxy.send_event(UserEvent::Title(title));
+    }
+    ran
 }
 
 fn main() {
     let (root, env_file) = config::locate();
-    if let Some(path) = &env_file {
-        let _ = dotenvy::from_path(path);
-    }
     let logs_dir = root.join("logs");
     logger::init(&logs_dir);
+    if let Some(path) = &env_file {
+        // Like load_dotenv() in Python, a variable already in the environment wins.
+        for problem in config::load_dotenv(path, |key, value| {
+            if std::env::var_os(key).is_none() {
+                std::env::set_var(key, value);
+            }
+        }) {
+            logger::error(&problem);
+        }
+    }
     let config = match Config::from_env() {
         Ok(config) => Arc::new(config),
         Err(message) => {
@@ -44,6 +62,7 @@ fn main() {
         }
     };
     let client = Client::new();
+    let gate = Arc::new(Mutex::new(()));
 
     // Accessory keeps the Dock icon away, as LSUIElement did for the Python version.
     let mut event_loop = EventLoopBuilder::<UserEvent>::with_user_event().build();
@@ -75,12 +94,15 @@ fn main() {
 
     // Refresh once now, then every UPDATE_INTERVAL seconds. A panic must not end the loop.
     {
-        let (client, config, proxy) = (client.clone(), config.clone(), proxy.clone());
+        let (client, config, proxy, gate) =
+            (client.clone(), config.clone(), proxy.clone(), gate.clone());
         logger::info("Widget initialized");
         logger::info("Starting the refresh loop");
         thread::spawn(move || loop {
-            match catch_unwind(AssertUnwindSafe(|| refresh(&client, &config, &proxy))) {
-                Ok(()) => thread::sleep(config.update_interval),
+            match catch_unwind(AssertUnwindSafe(|| {
+                refresh(&client, &config, &proxy, &gate, true)
+            })) {
+                Ok(_) => thread::sleep(config.update_interval),
                 Err(_) => {
                     logger::error("Error in the refresh thread");
                     thread::sleep(config.retry_delay);
@@ -112,11 +134,15 @@ fn main() {
             Event::UserEvent(UserEvent::Menu(event)) => {
                 if event.id == refresh_id {
                     // Off the event loop, so a slow pool does not freeze the menu.
-                    let (client, config, proxy) = (client.clone(), config.clone(), proxy.clone());
+                    let (client, config, proxy, gate) =
+                        (client.clone(), config.clone(), proxy.clone(), gate.clone());
                     thread::spawn(move || {
                         logger::info("Manual refresh started");
-                        refresh(&client, &config, &proxy);
-                        logger::info("Manual refresh finished");
+                        if refresh(&client, &config, &proxy, &gate, false) {
+                            logger::info("Manual refresh finished");
+                        } else {
+                            logger::info("A refresh is already running, skipping");
+                        }
                     });
                 } else if event.id == log_id {
                     open_log(&logs_dir.join("miner.log"));

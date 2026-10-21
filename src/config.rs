@@ -51,7 +51,7 @@ impl Config {
             coin: text("COIN", "btc"),
             base_url: text("BASE_URL", "https://pool.braiins.com"),
             update_interval: Duration::from_secs(update_interval as u64),
-            max_retries: number(&lookup, "MAX_RETRIES", 3)?.max(0) as u32,
+            max_retries: number(&lookup, "MAX_RETRIES", 3)?.clamp(0, i64::from(u32::MAX)) as u32,
             retry_delay: Duration::from_secs(number(&lookup, "RETRY_DELAY", 5)?.max(0) as u64),
             tuya: Account {
                 access_id: lookup("TUYA_ACCESS_ID"),
@@ -65,6 +65,25 @@ impl Config {
     pub fn from_env() -> Result<Config, String> {
         Config::from_lookup(|name| std::env::var(name).ok())
     }
+}
+
+/// Hands every variable of a `.env` file to `set`, skipping lines that do not
+/// parse (python-dotenv does the same; dotenvy's `from_path` would stop at the
+/// first one and drop everything after it). Returns one message per bad line
+/// or an unreadable file.
+pub fn load_dotenv(path: &Path, mut set: impl FnMut(&str, &str)) -> Vec<String> {
+    let iter = match dotenvy::from_path_iter(path) {
+        Ok(iter) => iter,
+        Err(e) => return vec![format!("Could not read {}: {e}", path.display())],
+    };
+    let mut problems = Vec::new();
+    for item in iter {
+        match item {
+            Ok((key, value)) => set(&key, &value),
+            Err(e) => problems.push(format!("Skipped a line of {}: {e}", path.display())),
+        }
+    }
+    problems
 }
 
 /// The nearest `.env` at or above `start`, like python-dotenv's search.

@@ -7,6 +7,7 @@
 use std::net::{SocketAddr, TcpStream};
 use std::path::Path;
 use std::process::Command;
+use std::sync::Mutex;
 use std::time::Duration;
 
 use reqwest::blocking::Client;
@@ -23,6 +24,23 @@ pub const INITIAL_TITLE: &str = "--";
 pub const OFFLINE_TITLE: &str = "Offline";
 
 const POOL_TIMEOUT: Duration = Duration::from_secs(10);
+
+/// Runs `job` with the gate held, so two refreshes never overlap and a slow one
+/// cannot be overtaken by a newer title. With `wait` false a busy gate means
+/// `None` and the job is skipped; the Python version got this by running a
+/// manual refresh on the UI thread.
+pub fn run_exclusive<T>(gate: &Mutex<()>, wait: bool, job: impl FnOnce() -> T) -> Option<T> {
+    let _held = if wait {
+        gate.lock().unwrap_or_else(|e| e.into_inner())
+    } else {
+        match gate.try_lock() {
+            Ok(held) => held,
+            Err(std::sync::TryLockError::Poisoned(e)) => e.into_inner(),
+            Err(std::sync::TryLockError::WouldBlock) => return None,
+        }
+    };
+    Some(job())
+}
 
 /// True when 8.8.8.8 answers on the DNS port.
 ///
