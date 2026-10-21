@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: src/hashrate.rs
 // Description: Turns a pool hash rate and a temperature reading into menu bar text.
 // Author: Jan Alexandr Kopřiva

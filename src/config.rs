@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: src/config.rs
 // Description: Reads the settings from the environment and finds the .env file.
 // Author: Jan Alexandr Kopřiva

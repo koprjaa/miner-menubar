@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: src/tuya.rs
 // Description: Signs Tuya Cloud requests and reads a temperature from a device.
 // Author: Jan Alexandr Kopřiva

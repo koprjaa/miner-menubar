@@ -1,4 +1,4 @@
-# Project: miner-widget-stats
+# Project: miner-menubar
 # File: .github/workflows/ci.yml
 # Description: Check formatting, linting, and tests on macOS.
 # Author: Jan Alexandr Kopřiva

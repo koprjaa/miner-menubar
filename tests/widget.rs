@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: tests/widget.rs
 // Description: Tests for Tuya signing, value formatting, configuration, logging and pool reads.
 // Author: Jan Alexandr Kopřiva
@@ -10,11 +10,11 @@ use std::net::{SocketAddr, TcpListener};
 use std::time::Duration;
 
 use hmac::{Hmac, KeyInit, Mac};
-use miner_widget_stats::config::{find_dotenv, Config};
-use miner_widget_stats::hashrate::*;
-use miner_widget_stats::logger::Logger;
-use miner_widget_stats::tuya::*;
-use miner_widget_stats::widget::{check_internet, compose_title, fetch_data};
+use miner_menubar::config::{find_dotenv, Config};
+use miner_menubar::hashrate::*;
+use miner_menubar::logger::Logger;
+use miner_menubar::tuya::*;
+use miner_menubar::widget::{check_internet, compose_title, fetch_data};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 

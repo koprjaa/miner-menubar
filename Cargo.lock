@@ -1357,7 +1357,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "miner-widget-stats"
+name = "miner-menubar"
 version = "1.0.0"
 dependencies = [
  "chrono",

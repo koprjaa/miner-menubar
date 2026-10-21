@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: src/widget.rs
 // Description: Reads the pool and the Tuya sensor and decides what the menu bar title says.
 // Author: Jan Alexandr Kopřiva

@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: tests/audit.rs
 // Description: Tests for differences from the Python widget found in the port audit.
 // Author: Jan Alexandr Kopřiva
@@ -7,8 +7,8 @@
 use std::collections::HashMap;
 use std::sync::Mutex;
 
-use miner_widget_stats::config::{load_dotenv, Config};
-use miner_widget_stats::widget::run_exclusive;
+use miner_menubar::config::{load_dotenv, Config};
+use miner_menubar::widget::run_exclusive;
 
 #[test]
 fn a_bad_dotenv_line_does_not_hide_the_variables_after_it() {

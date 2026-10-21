@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: src/lib.rs
 // Description: Library behind the menu bar widget: formatting, Tuya signing, pool reads.
 // Author: Jan Alexandr Kopřiva

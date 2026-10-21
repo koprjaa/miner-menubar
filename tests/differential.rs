@@ -1,12 +1,12 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: tests/differential.rs
 // Description: Replay observations recorded from the original Python widget against the Rust code.
 // Author: Jan Alexandr Kopřiva
 // License: MIT
 
-use miner_widget_stats::hashrate::{format_hashrate, format_temperature};
-use miner_widget_stats::tuya::{base_url, headers_at, read_temperature, signature, unwrap};
-use miner_widget_stats::widget::{compose_title, temperature_text, OFFLINE_TITLE};
+use miner_menubar::hashrate::{format_hashrate, format_temperature};
+use miner_menubar::tuya::{base_url, headers_at, read_temperature, signature, unwrap};
+use miner_menubar::widget::{compose_title, temperature_text, OFFLINE_TITLE};
 use serde_json::{Map, Value};
 
 /// What the Rust code produces for one recorded case.

@@ -1,10 +1,10 @@
-# Project: miner-widget-stats
+# Project: miner-menubar
 # File: Cargo.toml
 # Description: Rust package and dependency definitions.
 # Author: Jan Alexandr Kopřiva
 # License: MIT
 [package]
-name = "miner-widget-stats"
+name = "miner-menubar"
 version = "1.0.0"
 edition = "2021"
 authors = ["Jan Alexandr Kopřiva"]

@@ -1,4 +1,4 @@
-// Project: miner-widget-stats
+// Project: miner-menubar
 // File: src/main.rs
 // Description: macOS menu bar widget that shows the mining pool hash rate and the room temperature.
 // Author: Jan Alexandr Kopřiva
@@ -8,9 +8,9 @@ use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use miner_widget_stats::config::{self, Config};
-use miner_widget_stats::logger;
-use miner_widget_stats::widget::{open_log, run_exclusive, update_once, INITIAL_TITLE};
+use miner_menubar::config::{self, Config};
+use miner_menubar::logger;
+use miner_menubar::widget::{open_log, run_exclusive, update_once, INITIAL_TITLE};
 use reqwest::blocking::Client;
 use tao::event::{Event, StartCause};
 use tao::event_loop::{ControlFlow, EventLoopBuilder, EventLoopProxy};
