@@ -51,7 +51,8 @@ impl Config {
             coin: text("COIN", "btc"),
             base_url: text("BASE_URL", "https://pool.braiins.com"),
             update_interval: Duration::from_secs(update_interval as u64),
-            max_retries: number(&lookup, "MAX_RETRIES", 3)?.clamp(0, i64::from(u32::MAX)) as u32,
+            // At least one attempt: 0 would skip the pool without a word.
+            max_retries: number(&lookup, "MAX_RETRIES", 3)?.clamp(1, i64::from(u32::MAX)) as u32,
             retry_delay: Duration::from_secs(number(&lookup, "RETRY_DELAY", 5)?.max(0) as u64),
             tuya: Account {
                 access_id: lookup("TUYA_ACCESS_ID"),

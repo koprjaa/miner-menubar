@@ -51,8 +51,17 @@ pub fn check_internet(addr: SocketAddr, timeout: Duration) -> bool {
     TcpStream::connect_timeout(&addr, timeout).is_ok()
 }
 
-fn google_dns() -> SocketAddr {
-    SocketAddr::from(([8, 8, 8, 8], 53))
+/// True when any of the addresses answers. One blocked resolver must not make
+/// a working network read as offline.
+pub fn any_reachable(addrs: &[SocketAddr], timeout: Duration) -> bool {
+    addrs.iter().any(|addr| check_internet(*addr, timeout))
+}
+
+fn probe_addrs() -> [SocketAddr; 2] {
+    [
+        SocketAddr::from(([8, 8, 8, 8], 53)),
+        SocketAddr::from(([1, 1, 1, 1], 53)),
+    ]
 }
 
 /// The temperature text for a Tuya status, `--` when it could not be read.
@@ -166,7 +175,7 @@ fn read_tuya_temperature(client: &Client, config: &Config) -> String {
 
 /// One refresh: the pool hash rate and the Tuya temperature, as a title.
 pub fn update_once(client: &Client, config: &Config) -> String {
-    if !check_internet(google_dns(), Duration::from_secs(3)) {
+    if !any_reachable(&probe_addrs(), Duration::from_secs(3)) {
         logger::warning("No internet connection");
         return OFFLINE_TITLE.into();
     }

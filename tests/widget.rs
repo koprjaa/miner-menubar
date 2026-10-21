@@ -14,7 +14,7 @@ use miner_menubar::config::{find_dotenv, Config};
 use miner_menubar::hashrate::*;
 use miner_menubar::logger::Logger;
 use miner_menubar::tuya::*;
-use miner_menubar::widget::{check_internet, compose_title, fetch_data};
+use miner_menubar::widget::{any_reachable, check_internet, compose_title, fetch_data};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 
@@ -372,8 +372,9 @@ fn a_typo_in_a_number_names_the_variable() {
 }
 
 #[test]
-fn a_negative_retry_count_means_no_attempts() {
-    assert_eq!(config(&[("MAX_RETRIES", "-2")]).unwrap().max_retries, 0);
+fn a_retry_count_below_one_still_makes_one_attempt() {
+    assert_eq!(config(&[("MAX_RETRIES", "-2")]).unwrap().max_retries, 1);
+    assert_eq!(config(&[("MAX_RETRIES", "0")]).unwrap().max_retries, 1);
 }
 
 #[test]
@@ -507,4 +508,16 @@ fn fetch_data_without_a_token_makes_no_request() {
         fetch_data(&reqwest::blocking::Client::new(), &c),
         (Value::Null, Value::Null)
     );
+}
+
+#[test]
+fn one_reachable_address_is_enough() {
+    let open = TcpListener::bind("127.0.0.1:0").unwrap();
+    let closed = {
+        let l = TcpListener::bind("127.0.0.1:0").unwrap();
+        l.local_addr().unwrap()
+    };
+    let t = Duration::from_secs(1);
+    assert!(any_reachable(&[closed, open.local_addr().unwrap()], t));
+    assert!(!any_reachable(&[closed], t));
 }
