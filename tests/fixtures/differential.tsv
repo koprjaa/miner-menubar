@@ -1,0 +1,118 @@
+# kind	name	input(json)	python_output	rust_output	reason
+# python_output recorded from the original Python implementation (rumps, requests stubbed) before it was deleted.
+sig	plain	["test-id","test-secret","/v1.0/token?grant_type=1","1700000000000","abc123",""]	068AB062C0941301001F20D0710C9B574F1AE4F20F4CC7027782EEA1E545E90B	068AB062C0941301001F20D0710C9B574F1AE4F20F4CC7027782EEA1E545E90B	compatible
+sig	token	["test-id","test-secret","/v1.0/token?grant_type=1","1700000000000","abc123","tok"]	F889D5BD67F25E615C2761760AAFD415FF47583E911CA1905A4E436000CFFE18	F889D5BD67F25E615C2761760AAFD415FF47583E911CA1905A4E436000CFFE18	compatible
+sig	status_path	["id","s3cret","/v1.0/devices/dev123/status","1790000000123","0123456789abcdef0123456789abcdef","tok-xyz"]	8CA49A0585EA5F0EBC1A78B41089363CF7FBEE9A365CBE697E983736A318FD6B	8CA49A0585EA5F0EBC1A78B41089363CF7FBEE9A365CBE697E983736A318FD6B	compatible
+sig	unicode_secret	["id","tajemství","/p","1","n",""]	A69F23FE61AB9381BF5851A4E497CCFB7878E36E25F0C5F65BB52D7234998BDB	A69F23FE61AB9381BF5851A4E497CCFB7878E36E25F0C5F65BB52D7234998BDB	compatible
+sig	empty_all	["","","","","",""]	83100DBB72BE4E3687E4A320379E9BF3658B2AA4C23EF058977590736FE6CB35	83100DBB72BE4E3687E4A320379E9BF3658B2AA4C23EF058977590736FE6CB35	compatible
+headers	no_token	["test-id","test-secret","/v1.0/token?grant_type=1","","1700000000123","00112233445566778899aabbccddeeff"]	{"client_id": "test-id", "nonce": "00112233445566778899aabbccddeeff", "sign": "59BEEB0B689CB6488116F14D1D61E3BC4DB2E8F691E2C15D8753772A1EDDC751", "sign_method": "HMAC-SHA256", "t": "1700000000123"}	{"client_id": "test-id", "nonce": "00112233445566778899aabbccddeeff", "sign": "59BEEB0B689CB6488116F14D1D61E3BC4DB2E8F691E2C15D8753772A1EDDC751", "sign_method": "HMAC-SHA256", "t": "1700000000123"}	compatible
+headers	with_token	["test-id","test-secret","/v1.0/devices/dev123/status","tok","1700000000123","00112233445566778899aabbccddeeff"]	{"access_token": "tok", "client_id": "test-id", "nonce": "00112233445566778899aabbccddeeff", "sign": "6A8ECE22950179225BC6E3622A22B5ABC14CB05CE8C3C1EBE0C8E02B5B125CE9", "sign_method": "HMAC-SHA256", "t": "1700000000123"}	{"access_token": "tok", "client_id": "test-id", "nonce": "00112233445566778899aabbccddeeff", "sign": "6A8ECE22950179225BC6E3622A22B5ABC14CB05CE8C3C1EBE0C8E02B5B125CE9", "sign_method": "HMAC-SHA256", "t": "1700000000123"}	compatible
+base_url	eu	"eu"	https://openapi.tuyaeu.com	https://openapi.tuyaeu.com	compatible
+base_url	us	"us"	https://openapi.tuyaus.com	https://openapi.tuyaus.com	compatible
+base_url	cn	"cn"	https://openapi.tuyacn.com	https://openapi.tuyacn.com	compatible
+base_url	in	"in"	https://openapi.tuyain.com	https://openapi.tuyain.com	compatible
+base_url	empty	""	https://openapi.tuya.com	https://openapi.tuya.com	compatible
+hashrate	12500/Gh/s	[12500,"Gh/s"]	12.5TH/s	12.5TH/s	compatible
+hashrate	1000/Gh/s	[1000,"Gh/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	999/Gh/s	[999,"Gh/s"]	999.0Gh/s	999.0Gh/s	compatible
+hashrate	500/Gh/s	[500,"Gh/s"]	500.0Gh/s	500.0Gh/s	compatible
+hashrate	12.5/TH/s	[12.5,"TH/s"]	12.5TH/s	12.5TH/s	compatible
+hashrate	1.5/Ph/s	[1.5,"Ph/s"]	1500.0TH/s	1500.0TH/s	compatible
+hashrate	0.5/Ph/s	[0.5,"Ph/s"]	500.0TH/s	500.0TH/s	compatible
+hashrate	100/Mh/s	[100,"Mh/s"]	100.0Mh/s	100.0Mh/s	compatible
+hashrate	42/Zh/s	[42,"Zh/s"]	42.0Zh/s	42.0Zh/s	compatible
+hashrate	None/TH/s	[null,"TH/s"]	--	--	compatible
+hashrate	''/TH/s	["","TH/s"]	--	--	compatible
+hashrate	'abc'/TH/s	["abc","TH/s"]	--	--	compatible
+hashrate	[]/TH/s	[[],"TH/s"]	--	--	compatible
+hashrate	{}/TH/s	[{},"TH/s"]	--	--	compatible
+hashrate	0/TH/s	[0,"TH/s"]	0.0TH/s	0.0TH/s	compatible
+hashrate	'12.5'/TH/s	["12.5","TH/s"]	12.5TH/s	12.5TH/s	compatible
+hashrate	'0.0'/Gh/s	["0.0","Gh/s"]	0.0Gh/s	0.0Gh/s	compatible
+hashrate	0.0/Gh/s	[0.0,"Gh/s"]	0.0Gh/s	0.0Gh/s	compatible
+hashrate	1000000000.0/Kh/s	[1000000000.0,"Kh/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	1000000.0/Mh/s	[1000000.0,"Mh/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	0.001/Ph/s	[0.001,"Ph/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	1e-06/Eh/s	[1e-06,"Eh/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	0.05/Gh/s	[0.05,"Gh/s"]	0.1Gh/s	0.1Gh/s	compatible
+hashrate	0.25/Th/s	[0.25,"Th/s"]	0.2Th/s	0.2Th/s	compatible
+hashrate	0.35/Th/s	[0.35,"Th/s"]	0.3Th/s	0.3Th/s	compatible
+hashrate	2.25/TH/s	[2.25,"TH/s"]	2.2TH/s	2.2TH/s	compatible
+hashrate	-3/TH/s	[-3,"TH/s"]	-3.0TH/s	-3.0TH/s	compatible
+hashrate	-5000/Gh/s	[-5000,"Gh/s"]	-5000.0Gh/s	-5000.0Gh/s	compatible
+hashrate	True/TH/s	[true,"TH/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	False/TH/s	[false,"TH/s"]	0.0TH/s	0.0TH/s	compatible
+hashrate	' 7 '/TH/s	[" 7 ","TH/s"]	7.0TH/s	7.0TH/s	compatible
+hashrate	'1e3'/Gh/s	["1e3","Gh/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	'nan'/TH/s	["nan","TH/s"]	nanTH/s	nanTH/s	compatible
+hashrate	'inf'/TH/s	["inf","TH/s"]	infTH/s	infTH/s	compatible
+hashrate	'-inf'/TH/s	["-inf","TH/s"]	-infTH/s	-infTH/s	compatible
+hashrate	12.5/	[12.5,""]	12.5	12.5	compatible
+hashrate	12.5/th/s	[12.5,"th/s"]	12.5th/s	12.5th/s	compatible
+hashrate	12.5/PH/s	[12.5,"PH/s"]	12.5PH/s	12.5PH/s	compatible
+hashrate	1e+300/Eh/s	[1e+300,"Eh/s"]	1000000000000000017216064596736454828831087825013238982328892017892380671244575047987920451875459594568606138861698291060311049225532948520696938805711440650122628514669428460356992624968028329550689224175284346730060716088829214255439694630119794546505512415617982143262670862918816362862119154749127262208.0TH/s	1000000000000000017216064596736454828831087825013238982328892017892380671244575047987920451875459594568606138861698291060311049225532948520696938805711440650122628514669428460356992624968028329550689224175284346730060716088829214255439694630119794546505512415617982143262670862918816362862119154749127262208.0TH/s	compatible
+hashrate	123456789.987/Gh/s	[123456789.987,"Gh/s"]	123456.8TH/s	123456.8TH/s	compatible
+hashrate	0.9999999/TH/s	[0.9999999,"TH/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	0.96/TH/s	[0.96,"TH/s"]	1.0TH/s	1.0TH/s	compatible
+hashrate	999.95/Gh/s	[999.95,"Gh/s"]	1000.0Gh/s	1000.0Gh/s	compatible
+hashrate	999.94/Gh/s	[999.94,"Gh/s"]	999.9Gh/s	999.9Gh/s	compatible
+hashrate	'1_0'/TH/s	["1_0","TH/s"]	10.0TH/s	--	intentional: Python float() accepts digit-group underscores; the pool never sends them, so Rust shows --
+hashrate	'١٢'/TH/s	["١٢","TH/s"]	12.0TH/s	--	intentional: Python float() accepts non-ASCII digits; the pool never sends them, so Rust shows --
+hashrate	'12,5'/TH/s	["12,5","TH/s"]	--	--	compatible
+temp	scaled	[{"code":"va_temperature","value":235}]	23.5	23.5	compatible
+temp	among	[{"code":"va_humidity","value":55},{"code":"battery_percentage","value":90},{"code":"va_temperature","value":212}]	21.2	21.2	compatible
+temp	empty	[]	--	--	compatible
+temp	null	null	--	--	compatible
+temp	other	[{"code":"va_humidity","value":55}]	--	--	compatible
+temp	no_value	[{"code":"va_temperature"}]	--	--	compatible
+temp	null_value	[{"code":"va_temperature","value":null}]	--	--	compatible
+temp	string_value	[{"code":"va_temperature","value":"warm"}]	--	--	compatible
+temp	negative	[{"code":"va_temperature","value":-55}]	-5.5	-5.5	compatible
+temp	zero	[{"code":"va_temperature","value":0}]	0.0	0.0	compatible
+temp	float_value	[{"code":"va_temperature","value":235.5}]	23.6	23.6	compatible
+temp	bool_value	[{"code":"va_temperature","value":true}]	0.1	0.1	compatible
+temp	non_dict_item	["x"]	ERR	ERR	compatible
+temp	not_list	{"a":1}	ERR	ERR	compatible
+temp	first_wins	[{"code":"va_temperature","value":100},{"code":"va_temperature","value":200}]	10.0	10.0	compatible
+temp	negzero	[{"code":"va_temperature","value":-0.4}]	-0.0	-0.0	compatible
+temp	rounding	[{"code":"va_temperature","value":2345}]	234.5	234.5	compatible
+temp	tie	[{"code":"va_temperature","value":2325}]	232.5	232.5	compatible
+temp	list_value	[{"code":"va_temperature","value":[1]}]	--	--	compatible
+temp	str_status	"abc"	ERR	ERR	compatible
+unwrap	ok	{"success":true,"result":{"a":1}}	{"a": 1}	{"a": 1}	compatible
+unwrap	refused	{"success":false,"msg":"sign invalid"}	ERR	ERR	compatible
+unwrap	no_success	{"result":{}}	ERR	ERR	compatible
+unwrap	success_one	{"success":1,"result":[1,2]}	[1, 2]	[1, 2]	compatible
+unwrap	success_zero	{"success":0,"result":1}	ERR	ERR	compatible
+unwrap	no_result	{"success":true}	ERR	ERR	compatible
+unwrap	null_result	{"success":true,"result":null}	null	null	compatible
+unwrap	list	[1]	ERR	ERR	compatible
+title	real_fixture_temp	[{"username":"example-user","btc":{"all_time_reward":"0.00000000","hash_rate_unit":"Gh/s","hash_rate_5m":0.0,"hash_rate_60m":0.0,"hash_rate_24h":0.0,"hash_rate_yesterday":0.0,"low_workers":0,"off_workers":3,"ok_workers":0,"dis_workers":1,"current_balance":"0.00000000","today_reward":"0.00000000","estimated_reward":"0.00000000","shares_5m":0,"shares_60m":0,"shares_24h":0,"shares_yesterday":0}},{"btc":{"workers":{}}},"btc",[{"code":"va_temperature","value":235}]]	0.0Gh/s 23.5°C	0.0Gh/s 23.5°C	compatible
+title	real_fixture_tuya_fail	[{"username":"example-user","btc":{"all_time_reward":"0.00000000","hash_rate_unit":"Gh/s","hash_rate_5m":0.0,"hash_rate_60m":0.0,"hash_rate_24h":0.0,"hash_rate_yesterday":0.0,"low_workers":0,"off_workers":3,"ok_workers":0,"dis_workers":1,"current_balance":"0.00000000","today_reward":"0.00000000","estimated_reward":"0.00000000","shares_5m":0,"shares_60m":0,"shares_24h":0,"shares_yesterday":0}},{"btc":{"workers":{}}},"btc","FAIL"]	0.0Gh/s --°C	0.0Gh/s --°C	compatible
+title	real_fixture_tuya_missing	[{"username":"example-user","btc":{"all_time_reward":"0.00000000","hash_rate_unit":"Gh/s","hash_rate_5m":0.0,"hash_rate_60m":0.0,"hash_rate_24h":0.0,"hash_rate_yesterday":0.0,"low_workers":0,"off_workers":3,"ok_workers":0,"dis_workers":1,"current_balance":"0.00000000","today_reward":"0.00000000","estimated_reward":"0.00000000","shares_5m":0,"shares_60m":0,"shares_24h":0,"shares_yesterday":0}},{"btc":{"workers":{}}},"btc",[]]	0.0Gh/s --°C	0.0Gh/s --°C	compatible
+title	large_rate	[{"btc":{"hash_rate_5m":12500,"hash_rate_unit":"Gh/s"}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	12.5TH/s 23.5°C	12.5TH/s 23.5°C	compatible
+title	small_rate	[{"btc":{"hash_rate_5m":500,"hash_rate_unit":"Gh/s"}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	500.0Gh/s 23.5°C	500.0Gh/s 23.5°C	compatible
+title	pool_failed	[null,null,"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	pool_failed_no_temp	[null,null,"btc","FAIL"]	-- --°C	-- --°C	compatible
+title	workers_empty_dict	[{"btc":{"hash_rate_5m":5,"hash_rate_unit":"Gh/s"}},{},"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	workers_empty_list	[{"btc":{"hash_rate_5m":5,"hash_rate_unit":"Gh/s"}},[],"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	profile_empty	[{},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	workers_null	[{"btc":{"hash_rate_5m":5,"hash_rate_unit":"Gh/s"}},null,"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	coin_missing	[{"btc":{"hash_rate_5m":5,"hash_rate_unit":"Gh/s"}},{"x":1},"ltc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	rate_key_missing	[{"btc":{"hash_rate_unit":"Gh/s"}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	unit_key_missing	[{"btc":{"hash_rate_5m":1}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	rate_null	[{"btc":{"hash_rate_5m":null,"hash_rate_unit":"Gh/s"}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	rate_string	[{"btc":{"hash_rate_5m":"12500","hash_rate_unit":"Gh/s"}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	12.5TH/s 23.5°C	12.5TH/s 23.5°C	compatible
+title	rate_garbage	[{"btc":{"hash_rate_5m":"abc","hash_rate_unit":"Gh/s"}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	profile_is_list	[[1],{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	coin_is_list	[{"btc":[1]},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	coin_is_string	[{"btc":"abc"},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	unit_is_number	[{"btc":{"hash_rate_5m":12.5,"hash_rate_unit":5}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	12.55 23.5°C	Error 23.5°C	intentional: a unit that is not a string is a malformed answer; Python printed it glued to the number, Rust shows Error
+title	unit_is_list	[{"btc":{"hash_rate_5m":12.5,"hash_rate_unit":[1]}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	unit_unknown	[{"btc":{"hash_rate_5m":12.5,"hash_rate_unit":"Zh/s"}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	12.5Zh/s 23.5°C	12.5Zh/s 23.5°C	compatible
+title	error_keeps_temp	[{"btc":{}},{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	profile_true	[true,{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	profile_string	["abc",{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	profile_number	[5,{"x":1},"btc",[{"code":"va_temperature","value":235}]]	Error 23.5°C	Error 23.5°C	compatible
+title	profile_zero	[0,{"x":1},"btc",[{"code":"va_temperature","value":235}]]	-- 23.5°C	-- 23.5°C	compatible
+title	offline	["OFFLINE"]	Offline	Offline	compatible

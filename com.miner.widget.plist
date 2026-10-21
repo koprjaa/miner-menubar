@@ -6,9 +6,7 @@
     <string>com.miner.widget</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/bin/bash</string>
-        <string>-c</string>
-        <string>cd /Users/Jan/PycharmProjects/Miner_stats && source .venv/bin/activate && python miner_widget.py</string>
+        <string>/Users/Jan/PycharmProjects/Miner_stats/target/release/miner-widget-stats</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

@@ -1,0 +1,22 @@
+{
+  "username": "example-user",
+  "btc": {
+    "all_time_reward": "0.00000000",
+    "hash_rate_unit": "Gh/s",
+    "hash_rate_5m": 0.0,
+    "hash_rate_60m": 0.0,
+    "hash_rate_24h": 0.0,
+    "hash_rate_yesterday": 0.0,
+    "low_workers": 0,
+    "off_workers": 3,
+    "ok_workers": 0,
+    "dis_workers": 1,
+    "current_balance": "0.00000000",
+    "today_reward": "0.00000000",
+    "estimated_reward": "0.00000000",
+    "shares_5m": 0,
+    "shares_60m": 0,
+    "shares_24h": 0,
+    "shares_yesterday": 0
+  }
+}
