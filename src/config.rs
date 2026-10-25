@@ -2,8 +2,7 @@
 // File: src/config.rs
 // Description: Reads the settings from the environment and finds the .env file.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 

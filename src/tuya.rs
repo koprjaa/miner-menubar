@@ -2,8 +2,7 @@
 // File: src/tuya.rs
 // Description: Signs Tuya Cloud requests and reads a temperature from a device.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use hmac::{Hmac, KeyInit, Mac};
 use serde_json::Value;
 use sha2::{Digest, Sha256};

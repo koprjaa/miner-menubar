@@ -2,13 +2,13 @@
 # File: Cargo.toml
 # Description: Rust package and dependency definitions.
 # Author: Jan Alexandr Kopřiva
-# License: MIT
+# License: AGPL-3.0-or-later
 [package]
 name = "miner-menubar"
 version = "1.0.0"
 edition = "2021"
 authors = ["Jan Alexandr Kopřiva"]
-license = "MIT"
+license = "AGPL-3.0-or-later"
 description = "Shows mining hashrate and room temperature in the macOS menu bar."
 
 [dependencies]

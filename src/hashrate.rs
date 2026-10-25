@@ -2,8 +2,7 @@
 // File: src/hashrate.rs
 // Description: Turns a pool hash rate and a temperature reading into menu bar text.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use serde_json::Value;
 
 /// Multipliers onto TH/s, which is the unit the widget prefers to show.

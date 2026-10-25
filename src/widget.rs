@@ -2,8 +2,7 @@
 // File: src/widget.rs
 // Description: Reads the pool and the Tuya sensor and decides what the menu bar title says.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use std::net::{SocketAddr, TcpStream};
 use std::path::Path;
 use std::process::Command;

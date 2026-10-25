@@ -2,8 +2,7 @@
 // File: tests/audit.rs
 // Description: Tests for differences from the Python widget found in the port audit.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use std::collections::HashMap;
 use std::sync::Mutex;
 

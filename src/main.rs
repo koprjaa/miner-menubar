@@ -2,8 +2,7 @@
 // File: src/main.rs
 // Description: macOS menu bar widget that shows the mining pool hash rate and the room temperature.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::sync::{Arc, Mutex};
 use std::thread;

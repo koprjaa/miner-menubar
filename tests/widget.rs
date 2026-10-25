@@ -2,8 +2,7 @@
 // File: tests/widget.rs
 // Description: Tests for Tuya signing, value formatting, configuration, logging and pool reads.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use std::collections::HashMap;
 use std::io::{Read, Write};
 use std::net::{SocketAddr, TcpListener};

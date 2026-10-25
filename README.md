@@ -3,7 +3,7 @@
 Shows mining hashrate and room temperature in the macOS menu bar.
 
 [![CI](https://github.com/koprjaa/miner-menubar/actions/workflows/ci.yml/badge.svg)](https://github.com/koprjaa/miner-menubar/actions/workflows/ci.yml)
-[![MIT license](https://img.shields.io/badge/license-MIT-A31F34?style=flat-square)](LICENSE)
+[![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-A31F34?style=flat-square)](LICENSE)
 
 The widget reads your five-minute hashrate from Braiins Pool and the ambient temperature from a Tuya Cloud sensor. It refreshes immediately on startup, then every 300 seconds by default. The title looks like `12.5TH/s 23.5°C`; a source that fails shows `--`, and a machine with no network shows `Offline`.
 
@@ -46,4 +46,4 @@ For startup at login, edit `com.miner.widget.plist` before installing it as a La
 
 ## License
 
-[MIT](LICENSE)
+[AGPL-3.0-or-later](LICENSE)

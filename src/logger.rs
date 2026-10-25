@@ -2,8 +2,7 @@
 // File: src/logger.rs
 // Description: Rotating log file plus console output in the format the Python widget used.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use std::fs::{self, File, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};

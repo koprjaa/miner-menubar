@@ -2,8 +2,7 @@
 // File: tests/differential.rs
 // Description: Replay observations recorded from the original Python widget against the Rust code.
 // Author: Jan Alexandr Kopřiva
-// License: MIT
-
+// License: AGPL-3.0-or-later
 use miner_menubar::hashrate::{format_hashrate, format_temperature};
 use miner_menubar::tuya::{base_url, headers_at, read_temperature, signature, unwrap};
 use miner_menubar::widget::{compose_title, temperature_text, OFFLINE_TITLE};
